@@ -1,0 +1,2 @@
+Gradient descent derivation logistic regression:
+https://stats.stackexchange.com/questions/278771/how-is-the-cost-function-from-logistic-regression-derivated
