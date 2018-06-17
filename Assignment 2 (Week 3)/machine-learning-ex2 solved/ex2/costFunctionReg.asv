@@ -20,8 +20,8 @@ hypo = sigmoid(X*theta);
 J = -1/m*sum(y.*log(hypo)+(1-y).*log(1-hypo))+lambda/(2*m)*theta(2:m,1)'*theta(2:m,1);
 grad(1)=1/m*sum(X(:,1).*(hypo-y));
 for i =2:m
-    grad(i)=1/m*(sum(X(:,i).*(hypo-y))+lambda*theta(i));
-end
+    grad(i)=
+
 
 % =============================================================
 
