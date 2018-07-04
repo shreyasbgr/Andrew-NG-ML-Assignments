@@ -24,7 +24,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-         
+
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
@@ -62,29 +62,64 @@ Theta2_grad = zeros(size(Theta2));
 %               and Theta2_grad from Part 2.
 %
 
+%FORWARD PROPOGATION
+a1=[ones(m,1) X];
+z2=a1*Theta1';
+a2=sigmoid(z2);
+a2=[ones(m,1) a2];
+hypo=sigmoid(a2*Theta2');
 
+%CALCULATING COST FUNCTION
+for k=1:num_labels
+    yk=(y==k);
+    hypok=hypo(:,k);
+    del3_full(:,k)=hypo(k)-yk;%also calculating del3 for back propogation
+    Jk=-1/m*sum(yk.*log(hypok)+(1-yk).*log(1-hypok));
+    J=J+Jk;
+end
 
+%{
+Jr=0;
+for i=1:hidden_layer_size
+    for j=1:input_layer_size
+        Jr=Jr+Theta1(i,(j+1))^2;
+    end
+end
 
+for i=1:num_labels
+    for j=1:hidden_layer_size
+        Jr=Jr+Theta2(i,(j+1))^2;
+    end
+end
 
+Jr=Jr*lambda/(2*m)
+%}
+Jr=lambda/(2*m)*(sum(sum(Theta1(:,2:end).^2))+sum(sum(Theta2(:,2:end).^2)));
+J=J+Jr;
 
+%BACK PROPOGATION
 
+for i=1:m
+    del3=del3_full(i,:)';
+    del2=Theta2'*del3 .* sigmoidGradient([1,z2(i,:)])';
+    del2=del2(2:end);
+    Theta2_grad=Theta2_grad+del3*a2(i,:);
+    Theta1_grad=Theta1_grad+del2*a1(i,:);
+end
+%{
+del2_full=del3_full*Theta2;
+del2_full=del2_full(:,2:end);
 
-
-
-
-
-
-
-
-
-
-
-
+Theta2_grad=1/m*del3_full'*a2.*sigmoidGradient(a2);
+Theta1_grad=1/m*del2_full'*a1.*sigmoidGradient(a1);
+%}
 % -------------------------------------------------------------
 
 % =========================================================================
 
 % Unroll gradients
+Theta1_grad=Theta1_grad/m;
+Theta2_grad=Theta2_grad/m;
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 
