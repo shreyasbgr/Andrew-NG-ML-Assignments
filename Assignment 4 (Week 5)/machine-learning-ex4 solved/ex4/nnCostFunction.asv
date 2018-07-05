@@ -73,7 +73,7 @@ hypo=sigmoid(a2*Theta2');
 for k=1:num_labels
     yk=(y==k);
     hypok=hypo(:,k);
-    del3_full(:,k)=hypok-yk;%also calculating del3 for back propogation
+    del3_full(:,k)=hypo(k)-yk;%also calculating del3 for back propogation
     Jk=-1/m*sum(yk.*log(hypok)+(1-yk).*log(1-hypok));
     J=J+Jk;
 end
@@ -104,11 +104,9 @@ for i=1:m
     del2=Theta2'*del3 .* sigmoidGradient([1,z2(i,:)])';
     del2=del2(2:end);
     Theta2_grad=Theta2_grad+del3*a2(i,:); %to get num_labels*hidden_layer_size sized matrix for Theta2_grad
-    Theta1_grad=Theta1_grad+del2*a1(i,:);%to get hidden_layer_size*input_layer_size sized matrix for Theta1_grad
+    Theta1_grad=Theta1_grad+del2*a1(i,:);%to get hidden_layer_size*hidden_layer_size sized matrix for Theta2_grad
 end
 %{
-INCORRECT VECTORIZATION OF BACK PROPOGATION
-
 del2_full=del3_full*Theta2;
 del2_full=del2_full(:,2:end);
 
@@ -122,9 +120,6 @@ Theta1_grad=1/m*del2_full'*a1.*sigmoidGradient(a1);
 % Unroll gradients
 Theta1_grad=Theta1_grad/m;
 Theta2_grad=Theta2_grad/m;
-
-Theta1_grad(:,2:end)=Theta1_grad(:,2:end)+lambda/m*Theta1(:,2:end); %REGULARIZING
-Theta2_grad(:,2:end)=Theta2_grad(:,2:end)+lambda/m*Theta2(:,2:end); %REGULARIZING
 grad = [Theta1_grad(:) ; Theta2_grad(:)];
 
 
