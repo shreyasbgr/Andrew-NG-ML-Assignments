@@ -147,7 +147,7 @@ X_poly_test = [ones(size(X_poly_test, 1), 1), X_poly_test];         % Add Ones
 X_poly_val = polyFeatures(Xval, p);
 X_poly_val = bsxfun(@minus, X_poly_val, mu);
 X_poly_val = bsxfun(@rdivide, X_poly_val, sigma);
-X_poly_val = [ones(size(X_poly_val, 1), 1), X_poly_val];           % Add Ones
+X_poly_val = [ones(size(X_poly_val, 1), 1), X_poly_val];      % Add Ones
 
 fprintf('Normalized Training Example 1:\n');
 fprintf('  %f  \n', X_poly(1, :));
