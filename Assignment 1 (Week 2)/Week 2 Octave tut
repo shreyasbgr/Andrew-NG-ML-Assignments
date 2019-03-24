@@ -1,0 +1,128 @@
+Octave Tutorial
+1. ; suppresses the output
+2. disp() displays whatever string is taken by the disp function
+   disp(sprintf('2 decimals: %0.2f',3.1416) will display 3.1416 upto 2 decimals
+
+3. format long  (used to get all outputs in long format)
+   format short
+
+4. Matrix indexing starts from 1 and not 0.
+   A=[1 2;3 45 6]; or A=[1,2;3,4;5,6];
+   size(A) returns a 1x2 matrix. size(A,1) rows. size(A,2) columns
+   length(v) returns the length of a vector or the longer dim of a matrix.
+   v=1.0:0.1:2 generates a vector from 1.0 to 2.0 in steps of 0.1
+   v=1:6 generates a vector from 1 thru 6
+   A([1 3],:) (gets all the elements of A in rows 1 and 3)
+   A(:,2)=[10;11;12];  (changes the 2nd column of A)
+   A=[A,[100;101;102]]; (appends a column vector to A)
+   A(:)
+   C=2*ones(2,3);
+   C=eye(5);
+   C=zeros(1,3);
+   C=rand(1,3);
+   C=randn(1,3); random nos from gaussian distribution
+   C=magic(3)
+
+5. w=-6+sqrt(10)*(randn(1,10000));
+   hist(w)
+   hist(w,50)  50 rectangles are used
+
+6. help eye (shows the help page for eye)
+
+7. Data related:
+	load('featuresX.dat')
+	who  (shows the variables in the current scope)
+	whos (shows the variables with their sizes)
+	clear (clears all the variables in the current scope)
+	clear featuresX (will clear the variable featuresX from the current scope)
+	v=priceY(1:10);
+	save hello.mat v; (saves the vector v to hello.mat file)
+	save hello.txt v -ascii (saves the file in a human readable format)
+
+8. Computation Related:
+	A*B (multip of matrices)
+	A.*B (elementwise multip of matrices)
+	A.^2
+	1./A
+	exp(A),log(A),abs(A).
+	A+1 (adds 1 to each element of A)
+	A' (transpose of A)
+	[val,ind]=max(A) (finds the columnwise max of A)
+	max(A,[],1) (finds the columnwise maximum of A)
+	max(A,[],2) (finds the row wise maximum of A)
+	max(max(A)) (finds the max of the whole matrix)
+	A<3 (does element wise operation of <3)
+	[r,c] = find(A>=7)
+	sum(a),prod(a),floor(a),ceil(a)
+
+9. Plotting related:
+	t=[0:0.01:0.98]
+	y1=sin(2*pi*4*t);
+	plot(t,y1)
+	hold on;
+	plot(t,y2,'r');
+	xlabel('time')
+	ylabel('value')
+	legend('sin','cos')
+	title('my plot')
+	print -dpng 'myPlot.png' (saves the ploit as a file)
+	close
+	
+	figure(1); plot(t,y1);
+	figure(2); plot(t,y2);
+	subplot(1,2,1);
+	plot(t,y1);
+	subplot(1,2,2);
+	plot(t,y2);
+	axis([0.5 1 -1 1]) (changes the x axis and y axis ranges)
+	clf;
+	
+	A=magic(5);
+	imagesc(A);
+	imagesc(A),colorbar,colormap gray;
+
+10. Control statements related:
+	for i=1:10
+	  v(i)=2^i;
+	
+	indices=1:10
+	for i=indices
+	  disp(i)
+
+	i=1;
+	while i<=5,
+	  v(i)=100;
+	  i=i+1;
+	end;
+
+	while true,
+	  v(i)=100;
+	  i=i+1;
+	  if i== 6,
+	    break;
+	  end;
+	end;
+	
+	if v(1)==1,
+	  disp('The value is one');
+	elseif v(1)==2,
+	  disp('The value is two');
+	else
+	  disp('The value is one or two');
+	end;
+
+11. Functions related:
+	cd 'C:\User\ang\Desktop'
+	squareThisNumber(5)
+	function y=squareThisNumber(x)
+	  y=x^2;
+	addpath('C:\User\ang\Desktop') (adds the specified path)
+	function [y1,y2] = squareAndCubeThisNumber(x)
+	  y1=x^2;
+	  y2=x^3;
+
+
+12. Vectorization:
+	prediction = theta'*x;
+	
+
