@@ -94,7 +94,7 @@ end
 
 Jr=Jr*lambda/(2*m)
 %}
-Jr=lambda/(2*m)*(sum(sum(Theta1(:,2:end).^2))+sum(sum(Theta2(:,2:end).^2)));
+Jr=lambda/(2*m)*(sum(sum(Theta1(:,2:end).^2))+sum(sum(Theta2(:,2:end).^2))); %J due to regularization
 J=J+Jr;
 
 %BACK PROPOGATION
@@ -102,7 +102,7 @@ J=J+Jr;
 for i=1:m
     del3=del3_full(i,:)';
     del2=Theta2'*del3 .* sigmoidGradient([1,z2(i,:)])';
-    del2=del2(2:end);
+    del2=del2(2:end); %Removing the bias unit term
     Theta2_grad=Theta2_grad+del3*a2(i,:); %to get num_labels*hidden_layer_size sized matrix for Theta2_grad
     Theta1_grad=Theta1_grad+del2*a1(i,:);%to get hidden_layer_size*input_layer_size sized matrix for Theta1_grad
 end
@@ -125,7 +125,7 @@ Theta2_grad=Theta2_grad/m;
 
 Theta1_grad(:,2:end)=Theta1_grad(:,2:end)+lambda/m*Theta1(:,2:end); %REGULARIZING
 Theta2_grad(:,2:end)=Theta2_grad(:,2:end)+lambda/m*Theta2(:,2:end); %REGULARIZING
-grad = [Theta1_grad(:) ; Theta2_grad(:)];
+grad = [Theta1_grad(:) ; Theta2_grad(:)];                           %UNROLLING
 
 
 end

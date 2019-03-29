@@ -37,7 +37,7 @@ grad = zeros(size(theta));
 hypo=sigmoid(X*theta);
 J=-1/m*sum(y .* log(hypo) + (1-y).*log(1-hypo))+lambda/(2*m)*theta(2:end,1)'*theta(2:end,1);
 grad = 1/m * (X'*(hypo-y));
-temp=theta;
+temp=theta;%Creating a temporary theta with the first element = 0
 temp(1)=0;
 grad=grad+lambda/m*temp;
 

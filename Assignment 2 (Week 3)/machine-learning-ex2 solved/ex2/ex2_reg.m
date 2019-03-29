@@ -54,7 +54,7 @@ hold off;
 % Add Polynomial Features
 
 % Note that mapFeature also adds a column of ones for us, so the intercept
-% term is handled
+% term is handled (IMPORTANT)
 X = mapFeature(X(:,1), X(:,2));
 
 % Initialize fitting parameters
